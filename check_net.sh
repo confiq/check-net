@@ -19,7 +19,7 @@ do
 	if [ $works = 'false' ]
 	then
 		echo "error"
-		echo "$time Internet is down! $check_address" >> /home/confiq/status.txt;
+		echo "$time Internet is down!" >> ~/status.txt;
 	else
 		sleep 3;
 	fi
