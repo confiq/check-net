@@ -1,13 +1,19 @@
-#/bin/bash
-address=("8.8.8.8" "8.8.4.4" "4.2.2.2")
-#aaddress=("google.com" "www.google.com")
+#/usr/bin/env bash
+#
+# check internet connectivity
+
+# globals
+readonly ip_addresses=("8.8.8.8" "8.8.4.4" "4.2.2.2")
+readonly dns_addresses=("google.com" "facebook.com") # can add a check dig +short fqdn
+readonly sleep_cycle=5 # sleep cycle in seconds
+
 while true;
 do
-	time="[$(date +'%b %d, %r')] ";
+	date="[$(date +'%b %d, %r')] ";
 	works='true';
 	for check_address in "${address[@]}"
 	do
-		if ping -c 1 -W 1 $check_address > /dev/null;
+		if ping -c 1 $check_address > /dev/null;
 		then
 			works='true';
 			break;
@@ -19,8 +25,8 @@ do
 	if [ $works = 'false' ]
 	then
 		echo "error"
-		echo "$time Internet is down!" >> ~/status.txt;
+		echo "$date Internet is down!" >> ~/status.txt;
 	else
-		sleep 3;
+		sleep $sleep_cycle;
 	fi
 done
