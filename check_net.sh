@@ -11,12 +11,12 @@ while true;
 do
 	date="[$(date +'%b %d, %r')] ";
 	works='true';
-	for check_address in "${ip_addresses[@]}"
+	for check_address in ${ip_addresses[@]}
 	do
 		if ping -W 5 -c 1 $check_address > /dev/null;
 		then
 			works='true';
-			break;
+			continue;
 		else
 			echo $check_address does not work
 			works='false';
