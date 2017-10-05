@@ -33,7 +33,7 @@ do
 			echo "we are down";
 		fi
 	else
-		if [ $internet_is_down = 'true']
+		if [ $internet_is_down = 'true' ]
 		then
 			echo "$date INTERNET_UP" >> ~/status.txt
 			internet_is_down='false'
