@@ -6,7 +6,7 @@
 readonly ip_addresses=("8.8.8.8" "8.8.4.4" "4.2.2.2")
 readonly dns_addresses=("google.com" "facebook.com") # can add a check dig +short fqdn
 readonly sleep_cycle=5 # sleep cycle in seconds
-
+internet_is_down='false'
 while true;
 do
 	date="[$(date +'%b %d, %r')] ";
@@ -18,15 +18,26 @@ do
 			works='true';
 			break;
 		else
-			echo $check_address does not work
+			echo $check_address does not work;
 			works='false';
 		fi
 	done
 	if [ $works = 'false' ]
 	then
-		echo "error"
-		echo "$date Internet is down!" >> ~/status.txt;
+		if [ $internet_is_down = 'false' ]
+		then 
+			internet_is_down='true'
+			echo "$date INTERNET_DOWN" >> ~/status.txt;
+		else
+			#we do nothing cause we are down...
+			echo "we are down";
+		fi
 	else
+		if [ $internet_is_down = 'true']
+		then
+			echo "$date INTERNET_UP" >> ~/status.txt
+			internet_is_down='false'
+		fi
 		sleep $sleep_cycle;
 	fi
 done
