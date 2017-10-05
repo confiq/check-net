@@ -18,7 +18,7 @@ do
 			works='true';
 			break;
 		else
-			echo $check_address does not work;
+			echo -n "E";
 			works='false';
 		fi
 	done
@@ -28,16 +28,17 @@ do
 		then 
 			internet_is_down='true'
 			echo "$date INTERNET_DOWN" >> ~/status.txt;
-		else
+		#else
 			#we do nothing cause we are down...
-			echo "we are down";
 		fi
+		echo -n "X";
 	else
 		if [ $internet_is_down = 'true' ]
 		then
 			echo "$date INTERNET_UP" >> ~/status.txt
 			internet_is_down='false'
 		fi
+		echo -n "."
 		sleep $sleep_cycle;
 	fi
 done
