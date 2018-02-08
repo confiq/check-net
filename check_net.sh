@@ -12,10 +12,13 @@ internet_is_down='false'
 timestamp() {
 	date +"%s"
 }
+echodate() {
+	echo -n "[$(date +'%b %d, %r')]";
+}
 # funtime
 while true;
 do
-	date="[$(date +'%b %d, %r')] ";
+	#date="[$(date +'%b %d, %r')] ";
 	works='true';
 	for check_address in "${ip_addresses[@]}"
 	do
@@ -34,7 +37,7 @@ do
 		then 
 			total_down=$(timestamp)
 			internet_is_down='true'
-			echo "$date INTERNET_DOWN" >> ~/status.txt;
+			echo "$(echodate) INTERNET_DOWN" >> ~/status.txt;
 		#else
 			#we do nothing cause we are down...
 		fi
@@ -42,11 +45,14 @@ do
 	else
 		if [ $internet_is_down = 'true' ]
 		then
+			total_down_before_calc=$total_down
+			timestamp=$(timestamp)
 			total_down=$(expr $(timestamp) - $total_down)
 			echo -n $total_down
 			nice_total_down=$(date +%T -d "1/1 + $total_down sec")
-			echo "$date INTERNET_UP $nice_total_down" >> ~/status.txt
+			echo "$(echodate) INTERNET_UP $nice_total_down debug: $total_down secs $total_down_before_calc-$timestamp" >> ~/status.txt
 			internet_is_down='false'
+			total_down=0
 		fi
 		echo -n "."
 		sleep $sleep_cycle;
