@@ -50,11 +50,11 @@ do
 			total_down=$(expr $(timestamp) - $total_down)
 			echo -n $total_down
 			nice_total_down=$(date +%T -d "1/1 + $total_down sec")
-			echo "$(echodate) INTERNET_UP $nice_total_down debug: $total_down secs $total_down_before_calc-$timestamp" >> ~/status.txt
+			echo "$(echodate) INTERNET_UP $nice_total_down ($total_down)" >> ~/status.txt
 			internet_is_down='false'
 			total_down=0
 		fi
 		echo -n "."
-		sleep $sleep_cycle;
 	fi
+	sleep $sleep_cycle;
 done
